@@ -165,6 +165,7 @@ brew "gnupg"
 brew "libsodium"
 brew "memcached", restart_service: true
 brew "mpg321"
+brew "watchman"
 brew "mysql", restart_service: true
 brew "nginx", restart_service: true
 brew "redis", restart_service: true
@@ -172,7 +173,6 @@ brew "redis", restart_service: true
 # homebrew-cask
 # https://github.com/caskroom/homebrew-cask
 cask_args appdir: "/Applications"
-cask "1password"
 cask "aerial"
 cask "alfred"
 cask "appdelete"
@@ -181,14 +181,11 @@ cask "boom-3d"
 cask "day-o"
 cask "dash"
 cask "dropbox"
-cask "fantastical"
-cask "firefox"
 cask "google-chrome"
 cask "iterm2"
 cask "jetbrains-toolbox"
 cask "karabiner-elements"
 cask "kindle"
-cask "postman"
 cask "psequel"
 cask "recordit"
 cask "rescuetime"
@@ -196,12 +193,6 @@ cask "slack"
 cask "spotify"
 cask "toggl"
 cask "homebrew/cask-fonts/font-source-code-pro"
-
-# mas-cli
-# https://github.com/mas-cli/mas
-mas "1Password", id: 443987910
-mas "Magnet", id: 441258766
-mas "Pages", id: 409201541
 EOF
 
 laptop_echo "Configuring asdf version manager..."
