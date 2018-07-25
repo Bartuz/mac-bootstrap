@@ -127,6 +127,7 @@ brew "awscli"
 brew "bash"
 brew "bash-completion"
 brew "cloc"
+brew "coreutils"
 brew "cmake"
 brew "coreutils"
 brew "diff-so-fancy"
@@ -134,61 +135,73 @@ brew "dockutil"
 brew "dos2unix"
 brew "git"
 brew "git-quick-stats"
-brew "gmp" # Vim dependency
 brew "gpg" # asdf-nodejs dependency
-brew "htop"
-brew "hub"
 brew "imagemagick"
 brew "libtool" # asdf dependency
 brew "libxslt" # asdf dependency
 brew "libyaml" # asdf dependency
 brew "mas"
-brew "neovim", args: ["HEAD"]
 brew "overmind"
-brew "pandoc"
-brew "perl"
 brew "pgcli"
 brew "phantomjs"
 brew "postgresql", restart_service: true
 brew "python"
 brew "python3"
 brew "readline"
-brew "reattach-to-user-namespace"
 brew "rsync"
 brew "shellcheck"
 brew "sqlite"
 brew "ssh-copy-id"
 brew "the_silver_searcher"
-brew "thoughtbot/formulae/gitsh"
-brew "tmux"
 brew "tree"
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 brew "unixodbc" # asdf dependency
 brew "wget"
-brew "xz"
 brew "yarn", args: ["without-node"]
 brew "zsh"
+brew "zsh-completions"
+brew "libksba"
+brew "gnupg"
+brew "libsodium"
+brew "memcached", restart_service: true
+brew "mpg321"
+brew "mysql", restart_service: true
+brew "nginx", restart_service: true
+brew "redis", restart_service: true
 
 # homebrew-cask
 # https://github.com/caskroom/homebrew-cask
 cask_args appdir: "/Applications"
 cask "1password"
+cask "aerial"
+cask "alfred"
+cask "appdelete"
+cask "atom"
+cask "boom-3d"
+cask "day-o"
 cask "dash"
 cask "dropbox"
 cask "fantastical"
 cask "firefox"
 cask "google-chrome"
 cask "iterm2"
-cask "postico"
-cask "skype"
+cask "jetbrains-toolbox"
+cask "karabiner-elements"
+cask "kindle"
+cask "postman"
+cask "psequel"
+cask "recordit"
+cask "rescuetime"
+cask "slack"
+cask "spotify"
+cask "toggl"
+cask "homebrew/cask-fonts/font-source-code-pro"
 
 # mas-cli
 # https://github.com/mas-cli/mas
-mas "Evernote", id: 406056744
-mas "Slack", id: 803453959
-mas "Spark", id: 1176895641
-mas "Things3", id: 904280696
-mas "Tweetbot", id: 557168941
+mas "1Password", id: 443987910
+mas "Magnet", id: 441258766
+mas "Pages", id: 409201541
 EOF
 
 laptop_echo "Configuring asdf version manager..."
@@ -221,11 +234,11 @@ install_asdf_language() {
 laptop_echo "Installing latest Ruby..."
 cat << EOF > "$HOME"/.default-gems
 bundler
-haml_lint
-neovim
 pry
 rubocop
-tmuxinator
+rubocop-rspec
+mailcatcher
+git_fame
 EOF
 install_asdf_language "ruby" "$ASDF_RUBY_VERSION"
 laptop_echo "Checking which Ruby and Gem installs we are using at this point..."
@@ -240,8 +253,6 @@ bundle config --global jobs $((number_of_cores - 1))
 laptop_echo "Installing latest Node..."
 PATH="$PATH:$ASDF_DIR/installs/nodejs/$ASDF_NODEJS_VERSION/bin"
 cat << EOF > "$HOME"/.default-npm-packages
-gulp-cli
-neovim
 pug
 standard
 stylelint
