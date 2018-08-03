@@ -53,6 +53,11 @@ only supports Mac. Exiting..."
   exit 1
 fi
 
+################################################################################
+# Make sure we are on the newest macOS
+################################################################################
+
+softwareupdate -i -a
 
 ################################################################################
 # Check for presence of command line tools if macOS
@@ -175,24 +180,8 @@ sh "$BOOTSTRAP_DIR"/install/laptop 2>&1 | tee ~/laptop.log
 
 bootstrap_echo "Done!"
 
-
 ################################################################################
-# 2. Install Oh-My-Zsh (http://ohmyz.sh/)
-################################################################################
-
-bootstrap_echo "Step 2: Installing Oh-My-Zsh..."
-
-if [ -d "$HOME"/.oh-my-zsh ]; then
-  rm -rf "$HOME"/.oh-my-zsh
-fi
-
-git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-
-bootstrap_echo "Done!"
-
-
-################################################################################
-# 3. Setup dotfiles (http://jsua.co/dotfiles)
+# 2. Setup dotfiles (http://jsua.co/dotfiles)
 ################################################################################
 
 bootstrap_echo "Step 3: Installing dotfiles..."
@@ -213,65 +202,19 @@ source "$DOTFILES_DIR"/install.sh
 
 bootstrap_echo "Done!"
 
-
 ################################################################################
-# 4. Install ~/bin utilities
-################################################################################
-
-# bootstrap_echo "Step 4: Installing ~/bin utilities..."
-#
-# cp -R "$BOOTSTRAP_DIR"/bin/* "$HOME"/bin/
-#
-# bootstrap_echo "Done!"
-
-
-################################################################################
-# 5. Set up Tmuxinator (https://github.com/tmuxinator/tmuxinator)
+# 3. Set macOS preferences
 ################################################################################
 
-# bootstrap_echo "Step 5: Setting up Tmuxinator..."
-#
-# if [ ! -d "$HOME"/.tmuxinator/ ]; then
-#   mkdir "$HOME"/.tmuxinator
-# fi
-#
-# cp "$BOOTSTRAP_DIR"/lib/default.yml "$HOME"/.tmuxinator/
-#
-# bootstrap_echo "Done!"
+bootstrap_echo "Checking for SSH key, generating one if it doesn't exist"
+[[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
+info_echo "Copying public key to clipboard. Paste it into your Github account"
+[[ -f ~/.ssh/id_rsa.pub ]] && pbcopy < ~/.ssh/id_rsa.pub
+open https://github.com/account/ssh
 
 ################################################################################
-# 6. Install Ukrainian language utilities
-#
-# Reference:
-# * http://apple.stackexchange.com/a/11842/75491
-# * http://extensions.services.openoffice.org/en/project/ukrainian-dictionary
-################################################################################
-
-# bootstrap_echo "Step 6: Installing Ukrainian language utilities..."
-#
-# cp "$BOOTSTRAP_DIR"/lib/{hyph_uk.dic,uk_UA.aff,uk_UA.dic} "$DICTIONARY_DIR"
-#
-# bootstrap_echo "Done!"
-
-
-################################################################################
-# 7. Install Fira Code font
-################################################################################
-
-# bootstrap_echo "Step 7: Installing Fira Code fixed-width font..."
-# if [ -d "$HOME"/src/fonts ]; then
-#   rm -rf "$HOME"/src/fonts
-# fi
-# git clone https://github.com/tonsky/FiraCode "$HOME"/src/fira-code
-# cp "$HOME"/src/fira-code/distr/ttf/* "$HOME"/Library/Fonts/
-# rm -rf "$HOME"/src/fira-code
-#
-# bootstrap_echo "Done!"
-
-
-################################################################################
-# 8. Set macOS preferences
+# 4. Set macOS preferences
 ################################################################################
 
 bootstrap_echo "Step 8: Setting macOS preferences..."
@@ -281,6 +224,9 @@ source "$BOOTSTRAP_DIR"/install/macos-defaults
 
 # shellcheck source=/dev/null
 source "$BOOTSTRAP_DIR"/install/macos-dock
+
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/dotfiles/iterm2/prefs"
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 
 rm -rf "$BOOTSTRAP_DIR"
 
