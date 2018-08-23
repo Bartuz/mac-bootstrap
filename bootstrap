@@ -22,6 +22,7 @@ bootstrap_echo() {
 ################################################################################
 
 osname=$(uname)
+username=$(whoami)
 
 export COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
 export OLD_DOTFILES_BACKUP=$HOME/old_dotfiles_backup
@@ -75,8 +76,6 @@ fi
 ################################################################################
 # Authenticate
 ################################################################################
-
-sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until bootstrap has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -167,7 +166,7 @@ fi
 ################################################################################
 
 bootstrap_echo "Cloning mac-bootstrap repo..."
-git clone "$BOOTSTRAP_REPO_URL" -b "$BOOTSTRAP_BRANCH" "$BOOTSTRAP_DIR"
+sudo su - "$username" git clone "$BOOTSTRAP_REPO_URL" -b "$BOOTSTRAP_BRANCH" "$BOOTSTRAP_DIR"
 
 
 ################################################################################
@@ -195,7 +194,7 @@ fi
 
 bootstrap_echo "Cloning dotfiles repo to ${DOTFILES_DIR} ..."
 
-git clone "$DOTFILES_REPO_URL" -b "$DOTFILES_BRANCH" "$DOTFILES_DIR"
+sudo su - "$username" git clone "$DOTFILES_REPO_URL" -b "$DOTFILES_BRANCH" "$DOTFILES_DIR"
 
 # shellcheck source=/dev/null
 source "$DOTFILES_DIR"/install.sh
@@ -227,6 +226,16 @@ source "$BOOTSTRAP_DIR"/install/macos-dock
 
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/dotfiles/iterm2/prefs"
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+rm -rf "$BOOTSTRAP_DIR"
+
+bootstrap_echo "Done!"
+
+################################################################################
+# 5.SSH
+################################################################################
+
+ssh-keygen -t rsa -b 4096 -C "filip.bartuzi@gmail.com"
 
 rm -rf "$BOOTSTRAP_DIR"
 
