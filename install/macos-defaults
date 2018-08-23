@@ -233,7 +233,20 @@ defaults write com.apple.HIToolbox AppleDictationAutoEnable -bool false
 # Set touchbar to media keys + fn switch
 defaults write com.apple.touchbar.agent.PresentationModeFnModes app -string "functionKeys"
 defaults write com.apple.touchbar.agent.PresentationModeFnModes functionKeys -string "fullControlStrip"
+defaults write com.apple.touchbar.agent.PresentationModeFnModes appWithControlStrip -string "functionKeys"
+defaults write com.apple.touchbar.agent.PresentationModeFnModes fullControlStrip -string "functionKeys"
 defaults write com.apple.touchbar.agent PresentationModeGlobal -string "fullControlStrip"
+defaults write com.apple.controlstrip.FullCustomized -array \ 
+	"com.apple.system.group.brightness" \
+    "com.apple.system.group.keyboard-brightness" \
+    "com.apple.system.group.media" \
+    "com.apple.system.group.volume" \
+	"com.apple.system.screen-lock"
+defaults write com.apple.controlstrip.MiniCustomized -array \ 
+	"com.apple.system.brightness" \
+    "com.apple.system.media-play-pause" \
+    "com.apple.system.volume" \
+    "com.apple.system.mute"
 
 ## Set Double and Single quotes
 defaults write NSGlobalDomain NSUserQuotesArray -array '"\""' '"\""' '"'\''"' '"'\''"'
