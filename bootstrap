@@ -58,7 +58,7 @@ fi
 # Make sure we are on the newest macOS
 ################################################################################
 
-softwareupdate -i -a
+softwareupdate -i -a --restart
 
 ################################################################################
 # Check for presence of command line tools if macOS
