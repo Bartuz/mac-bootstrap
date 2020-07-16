@@ -145,8 +145,6 @@ brew "overmind"
 brew "pgcli"
 brew "phantomjs"
 brew "postgresql", restart_service: true
-brew "python"
-brew "python3"
 brew "readline"
 brew "rsync"
 brew "shellcheck"
@@ -157,7 +155,6 @@ brew "tree"
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 brew "unixodbc" # asdf dependency
 brew "wget"
-brew "yarn", args: ["without-node"]
 brew "zsh"
 brew "zsh-completions"
 brew "libksba"
@@ -237,10 +234,3 @@ echo "Node --> $(which node)"
 node -v
 echo "NPM --> $(which npm)"
 npm -v
-
-laptop_echo "Installing Python support for Neovim..."
-echo "Python 2 --> $(which python)"
-python --version
-echo "Python 3 --> $(which python3)"
-python3 --version
-sudo easy_install pip
